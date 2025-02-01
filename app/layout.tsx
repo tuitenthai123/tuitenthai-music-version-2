@@ -36,7 +36,7 @@ export default function RootLayout({
                   <Navbar />
                 </div>
                 <ScrollArea className="w-full h-[calc(100vh-64px)]">
-                  <main className="w-full p-4 mb-16">{children}</main>
+                  <main className="w-full p-4 ">{children}</main>
                 </ScrollArea>
               </div>
             </div>

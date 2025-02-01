@@ -82,7 +82,7 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 flex-1">
+    <div className={`container mx-auto px-4 flex-1 ${isPlaying ? "mb-16":""}`}>
       <div className="h-[270px] sm:h-[320px] lg:h-[370px]">
         <Carousel pauseOnHover slideInterval={4000}>
           {showcase.map((item, index) => (
