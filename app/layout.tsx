@@ -17,8 +17,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // Lấy trạng thái isPlaying từ zustand store
-  //const { isPlaying } = useStore();
 
   return (
     <html lang="en">

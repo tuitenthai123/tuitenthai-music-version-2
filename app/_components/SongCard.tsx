@@ -1,7 +1,9 @@
+"use client"
 import React from 'react'
 import { Separator } from "@/components/ui/separator";
 import { IoPlayCircle } from "react-icons/io5";
 import { FaHeartCirclePlus } from "react-icons/fa6";
+import { useStore } from "@/store/useStore";
 
 interface infometasong {
     artists?: string;
@@ -10,6 +12,7 @@ interface infometasong {
 }
 
 const SongCard: React.FC<infometasong> = ({ artists, thumbnail, title }) => {
+
     return (
         <div className='w-96 flex flex-col gap-1 group'>
             <Separator />

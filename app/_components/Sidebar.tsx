@@ -21,7 +21,7 @@ import { FaRadio } from "react-icons/fa6"
 import { TfiMusicAlt } from "react-icons/tfi"
 import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
-
+import { useStore } from "@/store/useStore"
 
 interface MenuItem {
   label: string
@@ -52,6 +52,7 @@ const Sidebar = () => {
     index: 1,
     type: "menu",
   })
+  const {isPlaying} = useStore()
 
   const handleSelection = (index: number, type: "menu" | "canhan") => {
     setSelectedItem({ index, type })
@@ -61,7 +62,7 @@ const Sidebar = () => {
     <div className="flex flex-col h-screen bg-stone-200/20">
       <div className="flex items-center justify-start gap-2 p-4 cursor-pointer">
         <Image alt="logo" src="/asset/logo.svg" width={40} height={40} />
-        <span className="text-lg font-bold text-gray-700">Zing MP3</span>
+        <span className="text-lg font-bold text-gray-700">TuiTenThaiMP3 V2</span>
       </div>
 
       <nav className="flex-shrink-0">
@@ -99,7 +100,7 @@ const Sidebar = () => {
       </nav>
 
       <Separator className="my-2" />
-      <ScrollArea className="h-72">
+      <ScrollArea className={`${isPlaying ? "h-72":"h-80"}`}>
         <div className="pr-4">
           {canhan.map((item, index) => (
             <Link href={item.route} key={item.label}>
