@@ -21,6 +21,7 @@ interface InfoSong {
   duration: string;
   thumbnail: string;
   artists: string[];
+  streamUrls: { streamUrl: string }[];
 }
 
 export const useStore = create<PlayerState>((set, get) => ({

@@ -5,7 +5,7 @@ import { Player } from "./_components/PlayerMusic"
 import "./globals.css"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import type React from "react"
-//import { useStore } from "@/store/useStore"  // Import useStore từ zustand
+import { AudioProvider } from "@/lib/provider/Audioprovider"
 
 export const metadata: Metadata = {
   title: "Tuitenthaimp3",
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div>
+        <AudioProvider>
           <div>
             <div className="flex flex-col md:flex-row">
               <aside className="w-2/12 md:w-64 bg-stone-200/65 h-auto">
@@ -42,7 +42,7 @@ export default function RootLayout({
           <div className="fixed bottom-0 left-0 w-full">
             <Player />
           </div>
-        </div>
+        </AudioProvider>
       </body>
     </html>
   )

@@ -8,6 +8,7 @@ import Topicevent from "./_components/TopicEvent";
 import Videocard from "./_components/Videocard";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import Top100card from "./_components/Top100card";
+import { useAudio } from "@/lib/provider/Audioprovider";
 
 interface Showcase {
   key: string;
@@ -60,6 +61,7 @@ const Page = () => {
   const [Top100, setTop100] = React.useState<ArrTop100>([])
   const [isLoading, setIsLoading] = React.useState(true);
   const { isPlaying, togglePlay, addToPlaylist, setCurrentSong } = useStore();
+  const { togglePlaySong,setAudioSrc } = useAudio();
 
   React.useEffect(() => {
     const handleFetchData = async () => {
@@ -83,7 +85,8 @@ const Page = () => {
     handleFetchData();
   }, []);
 
-  const handleFetchDataSong = async (key:any) => {
+
+  const handleFetchDataSong = async (key: string) => {
     try {
       const responsesong = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-song`, {
         method: "POST",
@@ -91,19 +94,25 @@ const Page = () => {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body:JSON.stringify({key:key})
+        body: JSON.stringify({ key: key })
       });
       
       const jsonResponsesong = await responsesong.json()
-      addToPlaylist(jsonResponsesong?.song);
-      setCurrentSong(jsonResponsesong?.song);
-      togglePlay(true);
-      console.log(jsonResponsesong)
+      const song = jsonResponsesong?.song;
+      
+      if (song) {
+        addToPlaylist(song);
+        setCurrentSong(song);
+        if (song.streamUrls && song.streamUrls.length > 0) {
+          setAudioSrc(song.streamUrls[0].streamUrl);
+        }
+        togglePlay(true);
+        togglePlaySong;
+      }
     } catch (error) {
       console.error(error);
     }
   }
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -114,7 +123,7 @@ const Page = () => {
   }
 
   return (
-    <div className={`container mx-auto px-4 flex-1 ${isPlaying ? "mb-16" : ""}`}>
+    <div className={`container mx-auto px-4 flex-1 ${isPlaying ? "mb-20" : ""}`}>
       <div className="h-[270px] sm:h-[320px] lg:h-[370px]">
         <Carousel pauseOnHover slideInterval={4000}>
           {showcase.map((item, index) => (
@@ -139,6 +148,7 @@ const Page = () => {
               key={items?.key}
               className="flex flex-col items-center justify-center"
               onClick={() => {
+                togglePlaySong
                 togglePlay;
                 handleFetchDataSong(items?.key)
               }}>
